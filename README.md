@@ -2,6 +2,15 @@
 
 **Security scanner specifically designed for AI-generated code**
 
+[![CI](https://github.com/consigcody94/code-guardian/actions/workflows/ci.yml/badge.svg)](https://github.com/consigcody94/code-guardian/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue)](https://www.typescriptlang.org/)
+[![Node](https://img.shields.io/badge/Node-≥18-green)](https://nodejs.org/)
+[![npm](https://img.shields.io/npm/v/code-guardian)](https://www.npmjs.com/package/code-guardian)
+
+Stop deploying vulnerable AI-generated code. Code Guardian detects the security patterns that AI assistants commonly introduce, providing instant feedback with actionable recommendations.
+**Security scanner specifically designed for AI-generated code**
+
 Stop deploying vulnerable AI-generated code. Code Guardian detects the security patterns that AI assistants commonly introduce, providing instant feedback with actionable recommendations.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)

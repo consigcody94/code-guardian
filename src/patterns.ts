@@ -355,3 +355,84 @@ export const AI_PATTERNS = {
   // AI scaffold patterns
   scaffold: /\/\/ TODO: Add error handling|\/\/ TODO: Implement|\/\/ Placeholder/gi,
 };
+
+// Additional high-value patterns for AI-generated code
+
+export const ADDITIONAL_PATTERNS: SecurityPattern[] = [
+  // ==================== INSECURE RANDOM ====================
+  {
+    id: 'CRYPTO-004',
+    name: 'Predictable Token Generation',
+    category: 'weak-crypto',
+    severity: 'high',
+    pattern: /(?:token|sessionId|nonce)\s*=\s*Math\.random\(\)/gi,
+    description: 'Using Math.random() for security tokens is not cryptographically secure',
+    recommendation: 'Use crypto.randomBytes() or crypto.randomUUID()',
+    cwe: 'CWE-338',
+  },
+
+  // ==================== XXEINJECTION ====================
+  {
+    id: 'XXE-001',
+    name: 'XML External Entity',
+    category: 'insecure-deserialization',
+    severity: 'high',
+    pattern: /new\s+DOMParser\(\)\.parseFromString|\.parseXML\(/gi,
+    description: 'XML parsing without disabling external entities (XXE risk)',
+    recommendation: 'Disable external entity processing in XML parser',
+    cwe: 'CWE-611',
+    owasp: 'A05:2021 – Security Misconfiguration',
+  },
+
+  // ==================== OPEN REDIRECT ====================
+  {
+    id: 'REDIR-001',
+    name: 'Open Redirect',
+    category: 'path-traversal',
+    severity: 'medium',
+    pattern: /(?:location\.href|window\.location)\s*=\s*(?:req\.query|req\.params|req\.body)/gi,
+    description: 'Redirect using user-controlled input (open redirect risk)',
+    recommendation: 'Validate redirect URL against whitelist',
+    cwe: 'CWE-601',
+  },
+
+  // ==================== MASS ASSIGNMENT ====================
+  {
+    id: 'MASS-001',
+    name: 'Mass Assignment',
+    category: 'privilege-escalation',
+    severity: 'high',
+    pattern: /User\.update\(req\.body\)|\.save\(req\.body\)/gi,
+    description: 'Direct assignment of request body to model (mass assignment risk)',
+    recommendation: 'Explicitly define allowed fields for update',
+    cwe: 'CWE-915',
+  },
+
+  // ==================== TIMING ATTACK ====================
+  {
+    id: 'TIMING-001',
+    name: 'Timing Attack',
+    category: 'weak-crypto',
+    severity: 'medium',
+    pattern: /(?:password|token|secret)\s*===?\s*(?:req\.|user\.)/gi,
+    description: 'String comparison vulnerable to timing attacks',
+    recommendation: 'Use crypto.timingSafeEqual() for sensitive comparisons',
+    cwe: 'CWE-208',
+  },
+
+  // ==================== SSRF ====================
+  {
+    id: 'SSRF-001',
+    name: 'Server-Side Request Forgery',
+    category: 'command-injection',
+    severity: 'high',
+    pattern: /(?:axios|fetch|http\.get)\(.*?(?:req\.query|req\.params|req\.body)/gi,
+    description: 'HTTP request with user-controlled URL (SSRF risk)',
+    recommendation: 'Validate and whitelist allowed domains',
+    cwe: 'CWE-918',
+    owasp: 'A10:2021 – Server-Side Request Forgery',
+  },
+];
+
+// Merge with main patterns
+SECURITY_PATTERNS.push(...ADDITIONAL_PATTERNS);
